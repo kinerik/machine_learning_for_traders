@@ -16,7 +16,6 @@ def get_tickers():
     data_bitfinex = requests.get(url=bitfinex_ltc)
     binary_bitfinex = data_bitfinex.content
     output_bitfinex = json.loads(binary_bitfinex)
-
     grava = open("tickers.csv","a")
     grava.write(str(output_bitfinex['bid'])+","+str(output_bitfinex['ask'])+"\n")
     grava.close()
@@ -28,8 +27,9 @@ def plot():
         ax.clear()
         bid = df['bid']
         ask = df['ask']
-        ax.plot(bid, label = "Bid - Venda")
-        ax.plot(ask, label = "Ask - Compra")
+
+        ax.plot(bid, label = "Bid - Venda LTC "+str(float(bid[-1:])))
+        ax.plot(ask, label = "Ask - Compra LTC "+str(float(ask[-1:])))
         plt.legend()
         plt.pause(2)
 
@@ -45,4 +45,3 @@ while True:
     except:
         print("Erro na plotagem")
         time.sleep(1)
-
