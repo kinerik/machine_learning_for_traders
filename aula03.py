@@ -15,7 +15,7 @@ def recebe_btc(lista_btc):
 def recebe_xrp(lista_xrp):
     market = Market()
     ticker = market.ticker(convert="BRL")
-    data = ticker['data']['1']['quotes']['BRL']['price']
+    data = ticker['data']['52']['quotes']['BRL']['price']
     btc = data
     lista_xrp.append(btc)
     return lista_xrp
