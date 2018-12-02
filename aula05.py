@@ -8,6 +8,9 @@ import numpy as np
 existe = os.path.isfile('tickers.csv')
 
 
+janela = 250
+desvio = 2
+
 if existe:
     pass
 else:
@@ -49,8 +52,9 @@ def get_tickers():
     binary_bitfinex = data_bitfinex.content
     output_bitfinex = json.loads(binary_bitfinex)
     grava = open("tickers.csv","a")
-    grava.write(str(output_bitfinex['bid'])+","+str(output_bitfinex['ask'])+"\n")
+    grava.write(str(output_bitfinex['bid'])+","+str(output_bitfinex['ask'])+'\n')
     grava.close()
+
 
 
 def plot():
@@ -59,6 +63,7 @@ def plot():
         ax.clear()
         bid = df['bid']
         ask = df['ask']
+
 
         diferenca = ask[-1:] - bid[-1:]
 
@@ -69,7 +74,7 @@ def plot():
         ax.plot(ask, label = "Ask - Compra LTC "+ str(np.around(float(ask[-1:]),8)), color = 'red', alpha = 0.5)
 
 
-        status, media, upper_band, lower_band = Bollinger_Bands(bid, 150, 2)
+        status, media, upper_band, lower_band = Bollinger_Bands(bid, janela, desvio)
 
         plt.legend()
 
@@ -92,6 +97,7 @@ def plot():
         else:
             print("Sem dados suficientes para criar faixas de Bollinger")
         plt.pause(2)
+        print(str(len(df)),"BID - ", str(float(bid[-1:])), " | ASK - ", str(float(ask[-1:])))
 
 
 while True:
@@ -101,12 +107,10 @@ while True:
     except:
         print("Erro no servidor")
         time.sleep(5)
-    plot()
-    '''
+
     try:
         plot()
     except:
         print("- - Programa Encerrado -- ")
         exit()
-    '''
 
