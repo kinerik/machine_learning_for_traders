@@ -1,4 +1,6 @@
-# machinelearningfortraders
+# Machine Learning for Traders com Saulo Catharino</br>
+
+Aprendizado de Máquina para negociação em bolsa de criptoativos.</br>
 
 Curso gratuito de Machine Learning for Traders no youtube, link:
 </br>
