@@ -191,8 +191,7 @@ def plot():
         if len(bid) > janela * 2:
             lower_band, upper_band = Bollinger_Bands(bid, ask, janela, desvio)
             plota_negociatas(bid,ask, lower_band, upper_band)
-        print(len(historico_compras))
-        print(len(historico_vendas))
+
         plt.pause(2)
 
 
