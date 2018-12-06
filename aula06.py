@@ -47,8 +47,6 @@ def Bollinger_Bands(bid, ask, janela, desvio):
         diferenca = ask[-1:] - bid[-1:] 
         ax.text(len(ask) + (len(ask)/10), bid[-1:] + (diferenca/2), "Spread " + str(np.around(float(porcentagem),3)) + "%")
 
-        ax.scatter(len(ask)-1,ask[-1:], color = 'red', alpha = 1)
-        ax.scatter(len(bid)-1,bid[-1:], color = 'green', alpha = 1)
 
         ax.plot(media, '--', color = 'gray', alpha = 0.3)
         ax.plot(upper_band, '--', color = 'blue', alpha = 0.5)
@@ -186,7 +184,9 @@ def plot():
 
         
         plt.legend()
-
+        
+        ax.scatter(len(ask)-1,ask[-1:], color = 'red', alpha = 1)
+        ax.scatter(len(bid)-1,bid[-1:], color = 'green', alpha = 1)
         
         if len(bid) > janela * 2:
             lower_band, upper_band = Bollinger_Bands(bid, ask, janela, desvio)
