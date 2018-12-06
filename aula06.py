@@ -48,6 +48,7 @@ def Bollinger_Bands(bid, ask, janela, desvio):
         ax.text(len(ask) + (len(ask)/10), bid[-1:] + (diferenca/2), "Spread " + str(np.around(float(porcentagem),3)) + "%")
 
 
+
         ax.plot(media, '--', color = 'gray', alpha = 0.3)
         ax.plot(upper_band, '--', color = 'blue', alpha = 0.5)
         ax.plot(lower_band, '--', color = 'blue', alpha = 0.2)
@@ -184,10 +185,9 @@ def plot():
 
         
         plt.legend()
-        
+
         ax.scatter(len(ask)-1,ask[-1:], color = 'red', alpha = 1)
         ax.scatter(len(bid)-1,bid[-1:], color = 'green', alpha = 1)
-        
         if len(bid) > janela * 2:
             lower_band, upper_band = Bollinger_Bands(bid, ask, janela, desvio)
             plota_negociatas(bid,ask, lower_band, upper_band)
@@ -204,7 +204,10 @@ while True:
     except:
         print("Erro no servidor")
         time.sleep(5)
-
-    plot()
-
+    try:
+        plot()
+    except:
+        print("-- Encerrando o Programa --")
+        exit()
+            
    
