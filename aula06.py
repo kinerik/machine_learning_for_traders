@@ -171,11 +171,13 @@ def plot():
 
         if len(bid) < janela*2:
             ax.set_xlim(0, len(bid)+(len(bid)/4)+5)
+
         else:
             ax.set_xlim(len(bid)-janela*2, len(bid)+100)
             bid_min = np.array(bid[-janela*2:]).min()
             ask_max = np.array(ask[-janela*2:]).max()
             ax.set_ylim(bid_min-(bid_min * .001),ask_max+(ask_max * .001))
+
 
 
 
@@ -185,10 +187,10 @@ def plot():
         
         plt.legend()
 
-
-        lower_band, upper_band = Bollinger_Bands(bid, ask, janela, desvio)
-        plota_negociatas(bid,ask, lower_band, upper_band)
-
+        
+        if len(bid) > janela * 2:
+            lower_band, upper_band = Bollinger_Bands(bid, ask, janela, desvio)
+            plota_negociatas(bid,ask, lower_band, upper_band)
         print(len(historico_compras))
         print(len(historico_vendas))
         plt.pause(2)
@@ -203,10 +205,6 @@ while True:
         print("Erro no servidor")
         time.sleep(5)
 
-    try:
-        plot()
+    plot()
 
-    except:
-        print("- - Programa Encerrado -- ")
-        exit()
-
+   
