@@ -2,7 +2,7 @@
 
 <div align="center">
     <img src="https://github.com/saulocatharino/machine_learning_for_traders/blob/master/Diagrama_.jpg?raw=true" width="400px"</img> 
-</div>
+</div></br>
 Aprendizado de Máquina para negociação em bolsa de criptoativos.</br>
 
 Curso gratuito no Youtube, link:
