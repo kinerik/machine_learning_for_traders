@@ -1,7 +1,5 @@
 # Machine Learning for Traders com Saulo Catharino</br>
 
-.. figure:: https://github.com/saulocatharino/machine_learning_for_traders/blob/master/Diagrama%20(1).jpg
-   :alt: Placehodler
 
 Aprendizado de Máquina para negociação em bolsa de criptoativos.</br>
 
