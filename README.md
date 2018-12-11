@@ -1,5 +1,5 @@
 # Machine Learning for Traders com Saulo Catharino</br>
-![Alt text](machine_learning_for_traders/Diagrama_.jpg?raw=true "Diagrama")
+(machine_learning_for_traders/Diagrama_.jpg)
 
 Aprendizado de Máquina para negociação em bolsa de criptoativos.</br>
 
