@@ -195,7 +195,7 @@ def main():
         ax.text(len(ask) + 10, bid[-1:] + (diferenca/2), "Spread " + str(np.around(float(porcentagem),3)) + "%")
 
 
-        plt.title("Litecoin/BTC")
+        plt.title("BTC / USD")
 
         if len(bid) < janela:
             ax.set_xlim(0, len(bid)+(len(bid)/4)+5)
