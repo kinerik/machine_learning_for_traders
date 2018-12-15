@@ -209,8 +209,8 @@ def main():
 
 
 
-        ax.plot(bid, label = "Bid - Venda LTC "+ str(np.around(float(bid[-1:]),8)), color = 'black', alpha = 0.5)
-        ax.plot(ask, label = "Ask - Compra LTC "+ str(np.around(float(ask[-1:]),8)), color = 'gray', alpha = 0.5)
+        ax.plot(bid, label = "Bid - Venda BTC "+ str(np.around(float(bid[-1:]),8)), color = 'black', alpha = 0.5)
+        ax.plot(ask, label = "Ask - Compra BTC "+ str(np.around(float(ask[-1:]),8)), color = 'gray', alpha = 0.5)
 
         
         plt.legend()
