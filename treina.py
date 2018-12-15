@@ -166,8 +166,8 @@ def spread(bid,ask):
 
 
 def get_tickers():
-    bitfinex_ltc = "https://api.bitfinex.com/v1/pubticker/btcusd"
-    data_bitfinex = requests.get(url=bitfinex_ltc)
+    bitfinex_btc = "https://api.bitfinex.com/v1/pubticker/btcusd"
+    data_bitfinex = requests.get(url=bitfinex_btc)
     binary_bitfinex = data_bitfinex.content
     output_bitfinex = json.loads(binary_bitfinex)
     grava = open("tickers.csv","a")
