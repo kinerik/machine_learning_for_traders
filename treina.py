@@ -125,13 +125,10 @@ def detect_cross(bid, ask, lower_band, upper_band, index):
         elif historico_bid[-1:] < historico_upper_band[-1:] and historico_bid[-2:-1] >= historico_upper_band[-2:-1]:
             historico_vendas.append(float(bid))
             index_vendas.append(index)
-            sinal = "Sell"
             sinal_action =2
         else:
-            sinal = "Hold"
             sinal_action = 0
     else:
-        sinal = "Hold"
         sinal_action = 0
     historico_sinal.append(sinal_action) 
 
