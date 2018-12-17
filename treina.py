@@ -17,7 +17,7 @@ desvio = 2              # Dimensão do desvio da janela dos indicadores
 batch_size = 360        # Dimensão do Lote de memória para treinar o modelo ( features - X )  
 intervalo = 10           # Intervalo entre as consultas de tickers no servidor
 historico_tamanho = 360  # Dimensão da janela para visualização dos sinais dos indicadores 
-
+fundos_simulado = 10000 # Quantidade de Dólares na carteira para simulação
 ## ---------------------------------
 
 
@@ -41,7 +41,7 @@ historico = ["","","","","",""]
 
 X_temp = [0,0,0,0,0,0]
 epoch = 0
-lucro_total=0
+
 
 batch = []
 compras = [0,0,0,0,0,0]
@@ -125,10 +125,13 @@ def detect_cross(bid, ask, lower_band, upper_band, index):
         elif historico_bid[-1:] < historico_upper_band[-1:] and historico_bid[-2:-1] >= historico_upper_band[-2:-1]:
             historico_vendas.append(float(bid))
             index_vendas.append(index)
+            sinal = "Sell"
             sinal_action =2
         else:
+            sinal = "Hold"
             sinal_action = 0
     else:
+        sinal = "Hold"
         sinal_action = 0
     historico_sinal.append(sinal_action) 
 
@@ -163,8 +166,8 @@ def spread(bid,ask):
 
 
 def get_tickers():
-    bitfinex_btc = "https://api.bitfinex.com/v1/pubticker/btcusd"
-    data_bitfinex = requests.get(url=bitfinex_btc)
+    bitfinex_ltc = "https://api.bitfinex.com/v1/pubticker/btcusd"
+    data_bitfinex = requests.get(url=bitfinex_ltc)
     binary_bitfinex = data_bitfinex.content
     output_bitfinex = json.loads(binary_bitfinex)
     grava = open("tickers.csv","a")
@@ -174,8 +177,8 @@ def get_tickers():
 
 
 def main():
-    global epoch, historico, lucro_total
-    print("Lucro Total: ", lucro_total) 
+    global epoch, historico, fundos_simulado
+
     df = pd.read_csv("tickers.csv")
 
     if len(df) > 1:
@@ -192,7 +195,7 @@ def main():
         ax.text(len(ask) + 10, bid[-1:] + (diferenca/2), "Spread " + str(np.around(float(porcentagem),3)) + "%")
 
 
-        plt.title("TREINAMENTO - BTC / USD")
+        plt.title("TREINAMENTO - Bitcoin /USD")
 
         if len(bid) < janela:
             ax.set_xlim(0, len(bid)+(len(bid)/4)+5)
@@ -233,7 +236,7 @@ def main():
                 for ind in range(0,6):       
  
                     if sinal_action[ind] == 1:
-                        if historico[ind] != "COMPRA":
+                        if historico[ind] != "COMPRA" and fundos_simulado >= float(ask[-1:]):
                             compras[ind] = float(ask[-1:])
                             X_temp[ind] = batch[-batch_size:]
                             print("--**--** COMPRA - ", str(float( compras[ind])))
@@ -244,16 +247,18 @@ def main():
                             X_temp[ind] = batch[-batch_size:]
                             compras[ind] = float(ask[-1:])
                             epoch += 1
+                            fundos_simulado = float(fundos_simulado - float(ask[-1:]))
 
                         historico[ind] = "COMPRA" 
 
 
-                    if sinal_action[ind] == 2 and historico[ind]!= "":
+                    if sinal_action[ind] == 2 and historico[ind] == "COMPRA":
                         vendas[ind] = float(bid[-1:])
                         epoch += 1
                         lucro = float(float(vendas[ind]) - float(compras[ind]))
 
-                        lucro_total += lucro
+
+                        fundos_simulado += lucro
                         print("--**--** VENDA ", str(float( vendas[ind]))," - Lucro = US$ ", str(lucro))
                         if lucro > 0:
                             try:
@@ -299,6 +304,7 @@ def main():
 volta = 1
 while True:
     print("--------------------------- ")
+    print("Fundos = US$ ", np.around(fundos_simulado,2))
     print("Tickers - ", volta)
     volta += 1 
     try:
