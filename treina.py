@@ -23,7 +23,7 @@ fundos_simulado = 10000 # Quantidade de Dólares na carteira para simulação
 
 X = []
 Y = [] 
-
+lances = 0
 historico_bid = []
 historico_ask = [] 
 
@@ -177,7 +177,7 @@ def get_tickers():
 
 
 def main():
-    global epoch, historico, fundos_simulado
+    global epoch, historico, fundos_simulado, lances
 
     df = pd.read_csv("tickers.csv")
 
@@ -220,12 +220,12 @@ def main():
         if len(bid) > janela * 3:
             bid_mean = float(bid[-1:] / bid[0])
             ask_mean = float(ask[-1:] / ask[0])
-            volta = 0.5
+            compensa = 0.5
             for ind in range(0,6):
 
-                 lower_band, upper_band = Bollinger_Bands(bid, ask, int(janela*volta), desvio)
+                 lower_band, upper_band = Bollinger_Bands(bid, ask, int(janela*compensa), desvio)
                  sinal_action[ind] = plota_negociatas(bid,ask, lower_band, upper_band)
-                 volta += .5
+                 compensa += .5
 
             del batch[:-batch_size - 10]
             batch.append([[sinal_action[0]], [sinal_action[1]],[sinal_action[2]],[sinal_action[3]], [sinal_action[4]], [sinal_action[5]], [bid_mean], [ask_mean]])
@@ -240,14 +240,15 @@ def main():
                             compras[ind] = float(ask[-1:])
                             X_temp[ind] = batch[-batch_size:]
                             print("--**--** COMPRA - ", str(float( compras[ind])))
+                            lances += 1
+                            fundos_simulado = float(fundos_simulado - float(ask[-1:]))
                         if historico[ind] == "COMPRA":
-                            compras[ind] = float(ask[-1:])
                             X.append(X_temp[ind])
                             Y.append(0)
                             X_temp[ind] = batch[-batch_size:]
-                            compras[ind] = float(ask[-1:])
+                            #compras[ind] = float(ask[-1:])
                             epoch += 1
-                            fundos_simulado = float(fundos_simulado - float(ask[-1:]))
+
 
                         historico[ind] = "COMPRA" 
 
@@ -255,6 +256,7 @@ def main():
                     if sinal_action[ind] == 2 and historico[ind] == "COMPRA":
                         vendas[ind] = float(bid[-1:])
                         epoch += 1
+                        lances += 1
                         lucro = float(float(vendas[ind]) - float(compras[ind]))
 
 
@@ -305,6 +307,7 @@ volta = 1
 while True:
     print("--------------------------- ")
     print("Fundos = US$ ", np.around(fundos_simulado,2))
+    print("Lances = ", lances)
     print("Tickers - ", volta)
     volta += 1 
     try:
