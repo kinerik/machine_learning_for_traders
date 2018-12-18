@@ -299,7 +299,8 @@ def main():
              svm.fit(X0,y)
              joblib.dump(svm, "modelo-"+str(epoch)+".pkl", compress=3)
              print("--*--* Modelo Salvo - modelo-"+str(epoch)+".pkl")
-        print("Batch Total", len(batch))
+        if len(batch) < batch_size:  
+            print("Batch Total", len(batch))
         print("Epoch - ", str(epoch))
         plt.pause(intervalo)
 
