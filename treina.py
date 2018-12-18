@@ -248,7 +248,7 @@ def main():
                             X_temp[ind] = batch[-batch_size:]
                             #compras[ind] = float(ask[-1:])
                             epoch += 1
-                          elif saldo < float(ask[-1:]):
+                        elif saldo < float(ask[-1:]):
                               print("*- Saldo insuficiente para efetuar a compra. -*")
 
                         historico[ind] = "COMPRA" 
