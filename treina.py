@@ -17,7 +17,7 @@ desvio = 2              # Dimensão do desvio da janela dos indicadores
 batch_size = 360        # Dimensão do Lote de memória para treinar o modelo ( features - X )  
 intervalo = 10           # Intervalo entre as consultas de tickers no servidor
 historico_tamanho = 360  # Dimensão da janela para visualização dos sinais dos indicadores 
-saldo = 100000 # Quantidade de Dólares na carteira para simulação
+saldo = 10000 # Quantidade de Dólares na carteira para simulação
 ## ---------------------------------
 
 
@@ -242,13 +242,14 @@ def main():
                             print("--**--** COMPRA - ", str(float( compras[ind])))
                             lances += 1
                             saldo = float(saldo - float(ask[-1:]))
-                        if historico[ind] == "COMPRA":
+                        elif historico[ind] == "COMPRA":
                             X.append(X_temp[ind])
                             Y.append(0)
                             X_temp[ind] = batch[-batch_size:]
                             #compras[ind] = float(ask[-1:])
                             epoch += 1
-
+                          elif saldo < float(ask[-1:]):
+                              print("*- Saldo insuficiente para efetuar a compra. -*")
 
                         historico[ind] = "COMPRA" 
 
@@ -306,7 +307,7 @@ def main():
 volta = 1
 while True:
     print("--------------------------- ")
-    print("Saldo = US$ ", np.around(saldo,2))
+    print("Fundos = US$ ", np.around(saldo,2))
     print("Lances = ", lances)
     print("Tickers - ", volta)
     volta += 1 
