@@ -16,7 +16,7 @@ janela = 360            # Dimensão da janela para cálculo de indicadores
 desvio = 2              # Dimensão do desvio da janela dos indicadores
 batch_size = 360        # Dimensão do Lote de memória para treinar o modelo ( features - X )  
 intervalo = 10           # Intervalo entre as consultas de tickers no servidor
-saldo = 360  # Dimensão da janela para visualização dos sinais dos indicadores 
+dim = 360  # Dimensão da janela para visualização dos sinais dos indicadores 
 saldo = 10000 # Quantidade de Dólares na carteira para simulação
 ## ---------------------------------
 
@@ -107,10 +107,10 @@ def detect_cross(bid, ask, lower_band, upper_band, index):
     historico_upper_band.append(upper_band)
 
 
-    del historico_bid[:-saldo]
-    del historico_ask[:-saldo]
-    del historico_lower_band[:-saldo]
-    del historico_upper_band[:-saldo]
+    del historico_bid[:-dim]
+    del historico_ask[:-dim]
+    del historico_lower_band[:-dim]
+    del historico_upper_band[:-dim]
 
 
 
@@ -318,8 +318,9 @@ while True:
         print("Erro no servidor - aguarde 5 segundos.")
         time.sleep(5)
         pass 
-    try:
+    main()
+    '''try:
         main()
     except:
         print("- - ENCERRANDO --")
-        exit()  
+        exit()  '''
