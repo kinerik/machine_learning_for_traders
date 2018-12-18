@@ -17,7 +17,7 @@ desvio = 2              # Dimensão do desvio da janela dos indicadores
 batch_size = 360        # Dimensão do Lote de memória para treinar o modelo ( features - X )  
 intervalo = 10           # Intervalo entre as consultas de tickers no servidor
 historico_tamanho = 360  # Dimensão da janela para visualização dos sinais dos indicadores 
-fundos_simulado = 10000 # Quantidade de Dólares na carteira para simulação
+saldo = 10000 # Quantidade de Dólares na carteira para simulação
 ## ---------------------------------
 
 
@@ -177,7 +177,7 @@ def get_tickers():
 
 
 def main():
-    global epoch, historico, fundos_simulado, lances
+    global epoch, historico, saldo, lances
 
     df = pd.read_csv("tickers.csv")
 
@@ -236,12 +236,12 @@ def main():
                 for ind in range(0,6):       
  
                     if sinal_action[ind] == 1:
-                        if historico[ind] != "COMPRA" and fundos_simulado >= float(ask[-1:]):
+                        if historico[ind] != "COMPRA" and saldo >= float(ask[-1:]):
                             compras[ind] = float(ask[-1:])
                             X_temp[ind] = batch[-batch_size:]
                             print("--**--** COMPRA - ", str(float( compras[ind])))
                             lances += 1
-                            fundos_simulado = float(fundos_simulado - float(ask[-1:]))
+                            saldo = float(saldo - float(ask[-1:]))
                         if historico[ind] == "COMPRA":
                             X.append(X_temp[ind])
                             Y.append(0)
@@ -260,7 +260,7 @@ def main():
                         lucro = float(float(vendas[ind]) - float(compras[ind]))
 
 
-                        fundos_simulado += lucro
+                        saldo += lucro
                         print("--**--** VENDA ", str(float( vendas[ind]))," - Lucro = US$ ", str(lucro))
                         if lucro > 0:
                             try:
@@ -306,7 +306,7 @@ def main():
 volta = 1
 while True:
     print("--------------------------- ")
-    print("Fundos = US$ ", np.around(fundos_simulado,2))
+    print("Saldo = US$ ", np.around(saldo,2))
     print("Lances = ", lances)
     print("Tickers - ", volta)
     volta += 1 
