@@ -17,7 +17,7 @@ desvio = 2              # Dimensão do desvio da janela dos indicadores
 batch_size = 360        # Dimensão do Lote de memória para treinar o modelo ( features - X )  
 intervalo = 10           # Intervalo entre as consultas de tickers no servidor
 historico_tamanho = 360  # Dimensão da janela para visualização dos sinais dos indicadores 
-saldo = 10000 # Quantidade de Dólares na carteira para simulação
+saldo = 100000 # Quantidade de Dólares na carteira para simulação
 ## ---------------------------------
 
 
