@@ -16,7 +16,7 @@ janela = 360            # Dimensão da janela para cálculo de indicadores
 desvio = 2              # Dimensão do desvio da janela dos indicadores
 batch_size = 360        # Dimensão do Lote de memória para treinar o modelo ( features - X )  
 intervalo = 10           # Intervalo entre as consultas de tickers no servidor
-historico_tamanho = 360  # Dimensão da janela para visualização dos sinais dos indicadores 
+saldo = 360  # Dimensão da janela para visualização dos sinais dos indicadores 
 saldo = 10000 # Quantidade de Dólares na carteira para simulação
 ## ---------------------------------
 
@@ -107,10 +107,10 @@ def detect_cross(bid, ask, lower_band, upper_band, index):
     historico_upper_band.append(upper_band)
 
 
-    del historico_bid[:-historico_tamanho]
-    del historico_ask[:-historico_tamanho]
-    del historico_lower_band[:-historico_tamanho]
-    del historico_upper_band[:-historico_tamanho]
+    del historico_bid[:-saldo]
+    del historico_ask[:-saldo]
+    del historico_lower_band[:-saldo]
+    del historico_upper_band[:-saldo]
 
 
 
@@ -308,7 +308,7 @@ def main():
 volta = 1
 while True:
     print("--------------------------- ")
-    print("Fundos = US$ ", np.around(saldo,2))
+    print("Saldo = US$ ", np.around(saldo,2))
     print("Lances = ", lances)
     print("Tickers - ", volta)
     volta += 1 
