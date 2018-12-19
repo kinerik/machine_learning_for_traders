@@ -261,7 +261,7 @@ def main():
                         lucro = float(float(vendas[ind]) - float(compras[ind]))
 
 
-                        saldo += lucro
+                        saldo += float(bid[-1:])
                         print("--**--** VENDA ", str(float( vendas[ind]))," - Lucro = US$ ", str(lucro))
                         if lucro > 0:
                             try:
